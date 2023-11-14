@@ -14,11 +14,33 @@ import Footer from "../Footer/Footer";
 import { loadState, saveState } from "../../utils/localStorage";
 import { calculateRank } from "../../utils/calculateRank";
 import Header from "../Header/Header";
+import gameList from "../../utils/gameList";
 
 const Game: React.FC = () => {
+  // Get day's game
+  const startDate = new Date("2023-11-14");
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const timeDiff = Math.abs(today.getTime() - startDate.getTime());
+  const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  let game;
+  if (dayDiff < gameList.length) {
+    // Get game from gameList based on day difference
+    game = gameList[dayDiff];
+  } else {
+    // Get random game from gameList if day difference exceeds gameList length
+    const randomIndex = Math.floor(Math.random() * gameList.length);
+    game = gameList[randomIndex];
+  }
+
+  // Extract daily numbers and operators from the game
+  const { numbers: dailyNumbers, operators: dailyOperators } = game;
+
+  // Initialize game states
   const [currentTime, setCurrentTime] = useState(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
+  // Load states from local storage or initialize them
   const [currentStreak, setCurrentStreak] = useState<number>(
     loadState("currentStreak") || 0
   );
@@ -35,6 +57,7 @@ const Game: React.FC = () => {
     loadState("longestStreak") || 0
   );
 
+  // Initialize other states
   const [evaluation, setEvaluation] = useState<number | null>(null);
   const [shareObject, setShareObject] = useState<{
     rank: number;
@@ -48,52 +71,26 @@ const Game: React.FC = () => {
   } | null>(loadState("shareObject") || null);
   const offset = new Date().getTimezoneOffset() + 480; // 480 minutes = 8 hours behind UTC (PST)
 
-  const today = new Date(new Date().getTime() - offset * 60 * 1000)
-    .toISOString()
-    .split("T")[0];
-
-  const isTodayLastPlayedDate = lastPlayedDate === today;
+  const isTodayLastPlayedDate =
+    lastPlayedDate === today.toISOString().split("T")[0];
   const [isGameEnded, setIsGameEnded] = useState<boolean>(
     isTodayLastPlayedDate
   );
 
+  // Initialize equation, numbers, and operators
   const [equation, setEquation] = useState<(string | number | null)[]>(
     Array(7).fill(null)
   );
   const [numbers, setNumbers] = useState<
     Array<{ number: number; inEquation: boolean }>
-  >(() => {
-    const tempNumbers = [];
-    let lowerHalf = false;
-    let upperHalf = false;
-    while (tempNumbers.length < 4) {
-      const newNumber = Math.floor(Math.random() * 9) + 1;
-      if (newNumber >= 1 && newNumber <= 4) lowerHalf = true;
-      if (newNumber >= 6 && newNumber <= 9) upperHalf = true;
-      if (tempNumbers.filter((num) => num.number === newNumber).length < 2) {
-        tempNumbers.push({ number: newNumber, inEquation: false });
-      }
-      if (tempNumbers.length === 4 && (!lowerHalf || !upperHalf)) {
-        tempNumbers.pop();
-        lowerHalf = false;
-        upperHalf = false;
-      }
-    }
-    return tempNumbers;
-  });
+  >(dailyNumbers.map((number: number) => ({ number, inEquation: false })));
   const [operators, setOperators] = useState<
     Array<{ operator: string; inEquation: boolean }>
-  >(() => {
-    const operators = ["+", "−", "×", "÷"];
-    const shuffledOperators = operators.sort(() => Math.random() - 0.5);
-    const [firstOperator, secondOperator, thirdOperator] = shuffledOperators;
-    return [
-      { operator: firstOperator, inEquation: false },
-      { operator: secondOperator, inEquation: false },
-      { operator: thirdOperator, inEquation: false },
-    ];
-  });
+  >(
+    dailyOperators.map((operator: string) => ({ operator, inEquation: false }))
+  );
 
+  // Handle number click
   const handleNumberClick = (number: number, index: number) => {
     const newNumbers = [...numbers];
     newNumbers[index].inEquation = true;
@@ -109,6 +106,7 @@ const Game: React.FC = () => {
     setNumbers(newNumbers);
   };
 
+  // Handle operator click
   const handleOperatorClick = (operator: string, index: number) => {
     const newOperators = [...operators];
     newOperators[index].inEquation = true;
@@ -124,6 +122,7 @@ const Game: React.FC = () => {
     setOperators(newOperators);
   };
 
+  // Handle number enable
   const handleNumberEnable = (number: number, index: number) => {
     setNumbers((prevNumbers) => [
       ...prevNumbers,
@@ -131,6 +130,7 @@ const Game: React.FC = () => {
     ]);
   };
 
+  // Handle operator enable
   const handleOperatorEnable = (operator: string, index: number) => {
     setOperators((prevOperators) => [
       ...prevOperators,
@@ -138,6 +138,7 @@ const Game: React.FC = () => {
     ]);
   };
 
+  // Handle symbol click
   const handleSymbolClick = (symbol: string | number, index: number) => {
     if (typeof symbol === "number") {
       handleNumberEnable(symbol, index);
@@ -151,6 +152,7 @@ const Game: React.FC = () => {
     });
   };
 
+  // Handle equation submit
   const handleEquationSubmit = (time: number) => {
     // Extract just the operators and numbers from the equation
     const operatorList = equation.filter(
@@ -178,7 +180,7 @@ const Game: React.FC = () => {
     }
 
     // Update lastPlayedDate and totalDaysPlayed
-    setLastPlayedDate(today);
+    setLastPlayedDate(todayString);
     setTotalDaysPlayed(totalDaysPlayed + 1);
 
     // Calculate the rank of the submitted equation
@@ -195,7 +197,7 @@ const Game: React.FC = () => {
     const newBestResults = [
       ...bestResults,
       {
-        date: today,
+        date: todayString,
         time: currentTime,
         rank: rank,
       },
@@ -234,6 +236,7 @@ const Game: React.FC = () => {
     setIsGameEnded(true);
   };
 
+  // Handle clear
   const handleClear = () => {
     equation.forEach((symbol, index) => {
       // If the symbol is not null, handle its click
@@ -243,6 +246,7 @@ const Game: React.FC = () => {
     });
   };
 
+  // Save states to local storage on change
   useEffect(() => {
     saveState("currentStreak", currentStreak);
     saveState("lastPlayedDate", lastPlayedDate);
@@ -259,6 +263,7 @@ const Game: React.FC = () => {
     shareObject,
   ]);
 
+  // Render game components
   return (
     <Box>
       <Header
@@ -268,7 +273,7 @@ const Game: React.FC = () => {
         isPaused={isPaused}
         setIsPaused={setIsPaused}
       />
-      {isGameEnded || lastPlayedDate === today ? (
+      {isGameEnded || lastPlayedDate === todayString ? (
         <>
           <EndScreen
             gameNumber={1} // replace with the appropriate state or value
