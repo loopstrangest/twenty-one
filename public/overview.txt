@@ -1,0 +1,70 @@
+OVERVIEW:
+twenty-one is a web app built in react and typescript.
+it allows the user to arrange four single-digit numbers and three mathematical operators.
+the goal is to create an equation that evaluates to a number as close as possible to TWENTY or ONE.
+
+OVERALL DISPLAY:
+NOTE - all of the display is mobile and desktop compatible
+"twenty one" text logo at top-left, left-aligned
+MM/DD/YYYY date and statistics icon below text logo, left-aligned
+Help button at top-right
+pause/play icon and MM:SS timer below help button
+click pause to pause the timer and hide the game
+click play to resume the timer and show the game
+TwentyOneDisplay.tsx: one row, the numbers 20 and 1 in the middle
+Equation.tsx: 7 rounded squares in the middle
+Operators.tsx, Numbers.tsx:
+two rows of squares at the bottom. first row has three mathematical operators:
+one math operator is ALWAYS plus or minus (random)
+one math operator is always multiply or divide (random)
+one math operator may be any of PLUS MINUS MULTIPLY DIVIDE
+second rows has four numbers between 1 and 9.
+the numbers are chosen randomly. no number may appear more than twice
+equations are evaluated with PEMDAS order of operations left to right
+At the bottom: "Twenty-One is brought to you by @strangestloop"
+Below that: twitter icon, buy me a coffee icon, mail icon
+If the user has already submitted for today, show: Can't wait to play again tomorrow,
+Share my score button, and the best equation and what it evaluates to
+
+USER ACTIONS BEFORE SUBMITTING ANSWER:
+numbers can only be placed in equation spots 1, 3, 5, 7
+operators can only be placed in equation spots 2, 4, 6
+click a number or operator at the top for it to disappear from the bottom section...
+...and appear in the first available spot in the middle section
+click a number or operator in the middle for it to disappear from the bottom section...
+...and appear in the first available spot in the bottom section
+when all 7 numbers/operators have been placed, 1 or 20 in the middle will have a green glow to it...
+...depending on whether the equation evaluates to a number closer to 1 or 20
+if it evaluates to 10.5 then both numbers glow green
+Submit button is visible in the lower middle only whenever an equation with all 7 things is made
+
+DISPLAY ON ANSWER SUBMIT:
+A popup(?) appears displaying the equation at the top
+Below that, the following fades in after 0.5 seconds: "= X", where X is the evaluated equation, to 1 or 2 or 3...
+...decimal points if needed
+DISTANCE is defined as the absolute distance from 1 or 20, whichever is smaller.
+So for example, 1.2 has distance of 0.2, 25 has a distance of 5, 10.9 has a distance of 9.1, etc.
+Below the "= X", after one second, the following fades in: "YYY best equation!", where YYY is 2nd, 3rd...
+...4th etc. which is the distance ranking for the equation out of all (24*6) possible equations with the given...
+...numbers and operators
+If the user has the best equation, then that text shows "Best equation!!!"
+Below that, "Share my score" button which copies the following text to the clipboard:
+Twenty-One #N
+I found the YYY best equation in XXm XXs
+https://strangestloop.io/twenty-one
+
+ON HELP BUTTON CLICK, display modal with:
+How to play Twenty-One
+Use all of the numbers and mathematical operators provide to create an equation that evaluates as closely
+as possible to 20 or 1, the closer the better
+Click or drag the numbers and operators to make an equations. When you have an equation you want to submit,
+click the "Submit" button. Find the best equation as fast as you can!
+"Got it!" button
+
+ON STATS ICON CLICK, display modal with:
+Your Twenty-One stats
+Total games played: N games
+Current streak: N days
+Longest streak: N days
+Top times: (two column chart with Date, Solve time)
+"Cool 😎" button that closes the modal

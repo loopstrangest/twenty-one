@@ -1,0 +1,27 @@
+DONE:
+Format for mobile: smaller boxes, smallerer equation boxes
+Implement help modal
+Implement footer
+Implement keyboard to add + backspace to remove from equation
+Add local storage: currentStreak, bestResults, totalDaysPlayed, latestScoreString, lastPlayedDate
+Write function to get X/144 rank
+Revise possible number and operator sets
+Improve footer links
+Improve help/timer display
+Implement stats
+Implement end screen on submit
+Implement persistent end screen based on lastPlayedDate
+Disable + show static timer on end screen
+Implement trueRank to handle ties for many equivalent equations
+Implement pause screen
+Write function to generate 1000s of unique combinations
+Store the 1000s of unique combinations in a file
+
+
+TODO:
+Implement reading from the file based on the day
+Make share assets
+Add everything to website
+Deploy!
+Solicit testing
+LAUNCH

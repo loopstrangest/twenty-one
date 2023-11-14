@@ -1,13 +1,182 @@
+/** @format */
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 1.3em;
+  max-width: 40rem;
+  padding: 2rem 2rem 0;
+  margin: auto;
+  line-height: 1.5rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+button {
+  height: 40px;
+  padding: 0 30px;
+  background: #000000;
+  color: #ffffff;
+  border: 3px solid #000000;
+  border-radius: 40px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.icon-button {
+  padding: 2px;
+  width: 24px;
+  height: 24px;
+  background: #efe9e6;
+  line-height: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.MuiButton-root {
+  min-width: auto !important;
+  padding: 0 !important;
+  padding-right: 10px !important;
+}
+
+.MuiButton-root:hover {
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+.MuiButton-root:focus {
+  outline: none !important;
+}
+
+.MuiSvgIcon-root {
+  color: black !important;
+}
+
+.MuiButton-root:active,
+.MuiButton-root:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.MuiButton-root:active::after {
+  animation: none !important;
+  background: none !important;
+}
+
+.operator-button,
+.number-button,
+.equation-box {
+  display: flex;
+  vertical-align: middle;
+  line-height: 60px;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  background: #efe9e6;
+  color: #000000;
+  font-size: 32px;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.equation-result {
+  font-weight: bold;
+  font-size: 36px;
+}
+
+@media (max-width: 500px) {
+  .equation-box {
+    width: 50px;
+    height: 50px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+}
+@media (max-width: 500px) {
+  .equation-box {
+    width: 50px;
+    height: 50px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+}
+
+@media (max-width: 400px) {
+  .equation-box {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 500px) {
+  .header-title {
+    font-size: 1.25em !important;
+    font-variant: normal !important;
+  }
+  .twenty {
+    margin-right: 4px !important;
+  }
+  .help-button {
+    padding: 0 15px;
+  }
+}
+
+@media (min-width: 501px) {
+  .help-button {
+    margin-top: 6px;
+  }
+}
+
+.help-button:active,
+.help-close-button:active,
+.copy-button:active,
+.submit-button:active,
+.state-close-button:active,
+.pause-screen-button:active {
+  background: #ffffff;
+  color: #000000;
+  border: 3px solid #000000;
+}
+
+.clear-button {
+  background: #ffffff;
+  color: #000000;
+  border: 3px solid #000000;
+}
+
+.clear-button:active {
+  background: #000000;
+  color: #ffffff;
+}
+
+.help-dialog-box,
+.stats-dialog-box {
+  background: #efe9e6;
+  border: 4px solid black;
+  padding: 20px;
+}
+
+.MuiDialog-container {
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 450px) {
+  table {
+    font-size: 0.7em;
+  }
 }

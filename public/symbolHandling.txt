@@ -1,0 +1,22 @@
+Two types of symbols: numbers and operators
+3 operators in Operators.tsx and 4 Numbers in Numbers.tsx must be used...
+...to form an equation in Equation.tsx
+Equation order: number operator number operator number operator number
+Equation example: 4 / 2 + 3 * 8
+When a number is clicked in Numbers.tsx, the number is added to the first...
+available correct place in Equation.tsx (1st or 3rd or 5th or 7th location)
+When an operator is clicked in Numbers.tsx, the operator is added to the first...
+available correct place in Equation.tsx (2nd or 4th or 6th location)
+When a symbol is clicked in Equation.tsx, that symbol disappears from...
+the equation and returns to its Numbers / Operators location.
+
+Remember that duplicate symbols can be present.
+
+I want "global" states for Numbers and Operators to be kept track of in Game.tsx,
+and passed down to Numbers, Operators, and Equation.
+The global states must keep track of:
+The symbol itself. When the symbol is clicked from Numbers or Operators,
+it is disabled in Numbers or Operators and placed and enabled in the
+first available spot in Equation.
+When a symbol is clicked from Equation, it is disabled and removed from
+Equation and enabled in Numbers or Operators.
