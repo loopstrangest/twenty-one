@@ -185,7 +185,6 @@ const Game: React.FC = () => {
 
     // Calculate the rank of the submitted equation
     const ranks = calculateRank(operatorList, numberList);
-    console.log("RANKS!!!", ranks);
 
     // Find the rank of the submitted equation
     const rankObject = ranks.find(
@@ -276,7 +275,7 @@ const Game: React.FC = () => {
       {isGameEnded || lastPlayedDate === todayString ? (
         <>
           <EndScreen
-            gameNumber={1} // replace with the appropriate state or value
+            gameNumber={dayDiff + 1} // replace with the appropriate state or value
             shareObject={shareObject}
           />
           <Footer />

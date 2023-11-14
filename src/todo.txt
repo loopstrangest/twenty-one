@@ -17,10 +17,10 @@ Implement pause screen
 Write function to generate 1000s of unique combinations
 Store the 1000s of unique combinations in a file
 Implement reading from the file based on the day
+Update share game number based on day
+Make share assets
 
 TODO:
-Make share assets
 Add everything to website
-Deploy!
 Solicit testing
 LAUNCH

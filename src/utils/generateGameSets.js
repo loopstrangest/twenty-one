@@ -93,9 +93,7 @@ function writeSetsToTsFile(sets, filePath) {
       );
   });
   fileContent += "];\nexport default gameList;";
-  console.log("Writing to file: ".concat(filePath));
   fs.writeFileSync(filePath, fileContent, "utf8");
-  console.log("Successfully wrote to file: ".concat(filePath));
 }
 // Generate the unique sets
 var uniqueSets = generateUniqueSets();
