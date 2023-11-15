@@ -228,7 +228,7 @@ const Game: React.FC = () => {
     if (seconds > 0) timeString += `${seconds}s`;
     timeString = timeString.trim();
     const result = evaluation ? evaluation : 0;
-    setShareObject({
+    const newShareObject = {
       rank,
       rankWithSuffixString,
       timeString,
@@ -237,7 +237,11 @@ const Game: React.FC = () => {
       result,
       bestEquation,
       bestResult,
-    });
+    };
+    setShareObject(newShareObject);
+
+    // Directly update localStorage
+    saveState("shareObject", newShareObject);
     setIsGameEnded(true);
   };
 
