@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({
         }}
       >
         <Logo />
-        <DateAndStats />
+        <DateAndStats setIsPaused={setIsPaused} />
       </Box>
       <Box
         className="help-timer-box"
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({
           justifyContent: isGameEnded ? "space-around" : "space-between",
         }}
       >
-        <HelpButton />
+        <HelpButton setIsPaused={setIsPaused} />
         <Timer
           currentTime={currentTime}
           setCurrentTime={setCurrentTime}

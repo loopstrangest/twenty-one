@@ -76,9 +76,7 @@ function writeSetsToTsFile(sets: UniqueSet[], filePath: string) {
 
   fileContent += "];\nexport default gameList;";
 
-  console.log(`Writing to file: ${filePath}`);
   fs.writeFileSync(filePath, fileContent, "utf8");
-  console.log(`Successfully wrote to file: ${filePath}`);
 }
 
 // Generate the unique sets

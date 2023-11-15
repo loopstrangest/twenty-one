@@ -3,15 +3,21 @@
 import React, { useState } from "react";
 import HelpDialog from "../Modals/HelpDialog";
 
-const HelpButton = () => {
+interface HelpButtonProps {
+  setIsPaused: (paused: boolean) => void;
+}
+
+const HelpButton: React.FC<HelpButtonProps> = ({ setIsPaused }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleOpen = () => {
     setDialogOpen(true);
+    setIsPaused(true);
   };
 
   const handleClose = () => {
     setDialogOpen(false);
+    setIsPaused(false);
   };
 
   return (

@@ -5,17 +5,23 @@ import { Box, Button, Typography } from "@mui/material";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import StatsDialog from "../Modals/StatsDialog";
 
-const DateAndStats = () => {
+interface DateStatsProps {
+  setIsPaused: (paused: boolean) => void;
+}
+
+const DateAndStats: React.FC<DateStatsProps> = ({ setIsPaused }) => {
   const currentDate = new Date().toLocaleDateString();
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleOpen = () => {
     setDialogOpen(true);
+    setIsPaused(true);
   };
 
   const handleClose = () => {
     setDialogOpen(false);
+    setIsPaused(false);
   };
 
   return (

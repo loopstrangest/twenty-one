@@ -18,11 +18,19 @@ import gameList from "../../utils/gameList";
 
 const Game: React.FC = () => {
   // Get day's game
-  const startDate = new Date("2023-11-14");
-  const today = new Date();
+  function getPSTDate(date: Date) {
+    const pstOffset = -480; // PST is UTC-8
+    const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+    return new Date(utc + pstOffset * 60000);
+  }
+
+  const startDate = new Date("2023-11-14T00:00:00Z"); // Start date in UTC
+  const today = getPSTDate(new Date()); // Convert today's date to PST
   const todayString = today.toISOString().split("T")[0];
+
   const timeDiff = Math.abs(today.getTime() - startDate.getTime());
   const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
   let game;
   if (dayDiff < gameList.length) {
     // Get game from gameList based on day difference
@@ -69,10 +77,8 @@ const Game: React.FC = () => {
     bestEquation: (string | number | null)[];
     bestResult: number;
   } | null>(loadState("shareObject") || null);
-  const offset = new Date().getTimezoneOffset() + 480; // 480 minutes = 8 hours behind UTC (PST)
 
-  const isTodayLastPlayedDate =
-    lastPlayedDate === today.toISOString().split("T")[0];
+  const isTodayLastPlayedDate = lastPlayedDate === todayString;
   const [isGameEnded, setIsGameEnded] = useState<boolean>(
     isTodayLastPlayedDate
   );
@@ -165,7 +171,7 @@ const Game: React.FC = () => {
     // Update currentStreak and longestStreak
     // Adjusting for timezone offset to get yesterday's date at midnight west coast USA time
     const yesterday = new Date(
-      new Date().getTime() - (864e5 + offset * 60 * 1000)
+      new Date().getTime() - (864e5 + 8 * 60 * 60 * 1000)
     )
       .toISOString()
       .split("T")[0];
